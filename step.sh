@@ -20,9 +20,9 @@ else
 fi
 
 curl --silent -X POST https://api.kobiton.com/v1/apps/uploadUrl \
-    -H "Authorization: Basic $BASICAUTH" \
-    -H 'Content-Type: application/json' \
-    -H 'Accept: application/json' \
+    -H "Authorization:Basic $BASICAUTH" \
+    -H 'Content-Type:application/json' \
+    -H 'Accept:application/json' \
     -d $JSON \
     -o ".tmp.upload-url-response.json"
 
@@ -35,8 +35,8 @@ echo "Uploading: ${APP_NAME_INPUT} (${APP_PATH_INPUT})"
 echo "URL: ${UPLOAD_URL}"
 
 curl --progress-bar -T "${APP_PATH_INPUT}" \
-    -H "Content-Type: application/octet-stream" \
-    -H "x-amz-tagging: unsaved=true" \
+    -H "Content-Type:application/octet-stream" \
+    -H "x-amz-tagging:unsaved=true" \
     -X PUT "${UPLOAD_URL}"
 #--verbose
 
@@ -44,8 +44,8 @@ echo "Processing: ${KAPPPATH}"
 
 JSON="{\"filename\":\"${APP_NAME_INPUT}.${APP_SUFFIX_INPUT}\",\"appPath\":\"${KAPPPATH}\"}"
 curl -X POST https://api.kobiton.com/v1/apps \
-    -H "Authorization: Basic $BASICAUTH" \
-    -H 'Content-Type: application/json' \
+    -H "Authorization:Basic $BASICAUTH" \
+    -H 'Content-Type:application/json' \
     -d $JSON \
     -o ".tmp.upload-app-response.json"
 
@@ -58,14 +58,14 @@ APP_VERSION_ID=$(cat ".tmp.upload-app-response.json" | ack -o --match '(?<=versi
 sleep 30
 
 curl -X GET https://api.kobiton.com/v1/app/versions/$APP_VERSION_ID \
-    -H "Authorization: Basic $BASICAUTH" \
-    -H "Accept: application/json" \
+    -H "Authorization:Basic $BASICAUTH" \
+    -H "Accept:application/json" \
     -o ".tmp.get-appversion-response.json"
 
 APP_ID=$(cat ".tmp.get-appversion-response.json" | ack -o --match '(?<=appId\":)([_\%\&=\?\.aA-zZ0-9:/-]*)')
 
 curl -X PUT https://api.kobiton.com/v1/apps/$APP_ID/$KOB_APP_ACCESS \
-    -H "Authorization: Basic $BASICAUTH"
+    -H "Authorization:Basic $BASICAUTH"
 
 echo "Uploaded app to kobiton repo with appId: ${APP_ID} and versionId: ${APP_VERSION_ID}"
 echo "Done"
