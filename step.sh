@@ -19,7 +19,7 @@ else
     JSON="{\"filename\":\"${APP_NAME_INPUT}.${APP_SUFFIX_INPUT}\",\"appId\":$APP_ID_INPUT}"
 fi
 
-curl --silent -X POST https://api.kobiton.com/v1/apps/uploadUrl \
+curl -X POST https://api.kobiton.com/v1/apps/uploadUrl \
     -H "Authorization:Basic $BASICAUTH" \
     -H 'Content-Type:application/json' \
     -H 'Accept:application/json' \
