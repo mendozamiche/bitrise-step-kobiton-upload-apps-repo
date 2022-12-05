@@ -37,8 +37,8 @@ echo "URL: ${UPLOAD_URL}"
 curl --progress-bar -T "${APP_PATH_INPUT}" \
     -H "Content-Type: application/octet-stream" \
     -H "x-amz-tagging: unsaved=true" \
-    -X PUT "${UPLOAD_URL}"
-#--verbose
+    -X PUT "${UPLOAD_URL}" \
+    --verbose
 
 echo "Processing: ${KAPPPATH}"
 
